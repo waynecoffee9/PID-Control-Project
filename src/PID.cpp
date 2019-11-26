@@ -1,0 +1,40 @@
+#include "PID.h"
+#include <iostream>
+
+/**
+ * TODO: Complete the PID class. You may add any additional desired functions.
+ */
+
+PID::PID() {}
+
+PID::~PID() {}
+
+void PID::Init(double Kp_, double Ki_, double Kd_, bool reset) {
+  /**
+   * TODO: Initialize PID coefficients (and errors, if needed)
+   */
+   this->Kp = Kp_;
+   this->Ki = Ki_;
+   this->Kd = Kd_;
+   if (!reset) this->prev_cte = 0.0;
+}
+
+void PID::UpdateError(double cte) {
+  /**
+   * TODO: Update PID errors based on cte.
+   */
+   
+   this->p_error = cte;
+   this->i_error += cte;
+   this->d_error = cte - this->prev_cte;
+   this->prev_cte = cte;
+}
+
+double PID::TotalError() {
+  /**
+   * TODO: Calculate and return the total error
+   */
+  double steer = -this->Kp * this->p_error 
+  - this->Ki * this->i_error - this->Kd * this->d_error;
+  return steer;  // TODO: Add your total error calc here!
+}
